@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <form id="studentForm">
+        <label for="studentName">Student Name:</label>
+        <input type="text" id="studentName" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required><br>
+
+        <label for="eno">Enrollment Number:</label>
+        <input type="text" id="eno" required><br>
+
+        <label for="branch">Branch:</label>
+        <input type="text" id="branch" required><br>
+
+        <label for="yearOfStudy">Year of Study:</label>
+        <input type="text" id="yearOfStudy" required><br>
+
+        <label for="contactNo">Contact Number:</label>
+        <input type="text" id="contactNo" required><br>
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" required><br>
+
+        <label for="dateOfBirth">Date of Birth:</label>
+        <input type="date" id="dateOfBirth" required><br>
+
+        <label for="gender">Gender:</label>
+        <select id="gender" required>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select><br>
+
+        <label for="bloodGroup">Blood Group:</label>
+        <input type="text" id="bloodGroup" required><br>
+
+        <label for="photo">Photo URL:</label>
+        <input type="text" id="photo" required><br>
+
+        <label for="signature">Signature URL:</label>
+        <input type="text" id="signature" required><br>
+
+        <label for="courses">Courses (comma separated):</label>
+        <input type="text" id="courses" placeholder="Course1, Course2, Course3" required><br>
+
+        <label for="CGPA">CGPA:</label>
+        <input type="text" id="CGPA" required><br>
+
+        <label for="attendance">Attendance:</label>
+        <input type="text" id="attendance" required><br>
+
+        <label for="SGPA">SGPA (comma separated):</label>
+        <input type="text" id="SGPA" placeholder="Semester1, Semester2, ..." required><br>
+
+        <label for="backLogs">Backlogs:</label>
+        <input type="text" id="backLogs" required><br>
+
+        <label for="midTermMarks">Mid Term Marks (comma separated):</label>
+        <input type="text" id="midTermMarks" placeholder="85, 78, 92" required><br>
+
+        <label for="projects">Projects (comma separated):</label>
+        <input type="text" id="projects" required><br>
+
+        <label for="skills">Skills (comma separated):</label>
+        <input type="text" id="skills" required><br>
+
+        <label for="achievements">Achievements (comma separated):</label>
+        <input type="text" id="achievements" required><br>
+
+        <label for="hobbies">Hobbies (comma separated):</label>
+        <input type="text" id="hobbies" required><br>
+
+        <label for="languages">Languages (comma separated):</label>
+        <input type="text" id="languages" required><br>
+
+        <label for="behaviourAnalytics">Behaviour Analytics (comma separated):</label>
+        <input type="text" id="behaviourAnalytics" required><br>
+
+        <label for="studentScore">Student Score:</label>
+        <input type="text" id="studentScore" required><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const formData = {
+                studentName: document.getElementById('studentName').value.trim(),
+                email: document.getElementById('email').value.trim(),
+                eno: document.getElementById('eno').value.trim(),
+                branch: document.getElementById('branch').value.trim(),
+                yearOfStudy: document.getElementById('yearOfStudy').value.trim(),
+                contactNo: document.getElementById('contactNo').value.trim(),
+                address: document.getElementById('address').value.trim(),
+                dateOfBirth: document.getElementById('dateOfBirth').value.trim(),
+                gender: document.getElementById('gender').value.trim(),
+                bloodGroup: document.getElementById('bloodGroup').value.trim(),
+                photo: document.getElementById('photo').value.trim(),
+                signature: document.getElementById('signature').value.trim(),
+                courses: document.getElementById('courses').value.split(',').map(course => ({ name: course.trim() })),
+                CGPA: document.getElementById('CGPA').value.trim(),
+                attendance: document.getElementById('attendance').value.trim(),
+                SGPA: document.getElementById('SGPA').value.split(',').map(semester => ({ semester: semester.trim() })),
+                backLogs: document.getElementById('backLogs').value.trim(),
+                midTermMarks: document.getElementById('midTermMarks').value.split(',').map(mark => mark.trim()),
+                projects: document.getElementById('projects').value.split(',').map(project => project.trim()),
+                skills: document.getElementById('skills').value.split(',').map(skill => skill.trim()),
+                achievements: document.getElementById('achievements').value.split(',').map(achievement => achievement.trim()),
+                hobbies: document.getElementById('hobbies').value.split(',').map(hobby => hobby.trim()),
+                languages: document.getElementById('languages').value.split(',').map(lang => lang.trim()),
+                behaviourAnalytics: document.getElementById('behaviourAnalytics').value.split(',').map(behavior => behavior.trim()),
+                studentScore: document.getElementById('studentScore').value.trim()
+            };
+
+            fetch('https://backend-x4en.onrender.com/api/create-student', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert('Student created successfully!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error occurred while creating student.');
+            });
+        });
+    </script>
+
+</body>
+</html>
